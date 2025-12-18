@@ -23,5 +23,21 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
+
+        \App\Models\User::factory()->create([
+                'name' => 'Vendedor Teste',
+                'email' => 'admin@admin.com',
+            ]);
+
+            $categories = ['Eletrônicos', 'Roupas', 'Livros', 'Casa', 'Esportes'];
+            foreach ($categories as $cat) {
+                \App\Models\Category::create([
+                    'name' => $cat,
+                    'slug' => \Illuminate\Support\Str::slug($cat)
+                ]);
+            }
+
+            \App\Models\Product::factory(50)->create();
+
     }
 }
