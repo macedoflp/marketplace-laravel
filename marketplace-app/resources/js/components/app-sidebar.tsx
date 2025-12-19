@@ -13,12 +13,12 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Package } from 'lucide-react';
+import { LayoutGrid, Package, ShoppingCart, ShoppingBag } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Início',
         href: dashboard(),
         icon: LayoutGrid,
     },
@@ -27,15 +27,18 @@ const mainNavItems: NavItem[] = [
         href: '/my-products',
         icon: Package,
     },
-];
-
-const footerNavItems: NavItem[] = [
     {
         title: 'Carrinho',
         href: '/cart',
-        icon: BookOpen,
+        icon: ShoppingCart,
+    },
+    {
+        title: 'Meus Pedidos',
+        href: '/orders',
+        icon: ShoppingBag,
     }
 ];
+
 
 export function AppSidebar() {
     return (
@@ -53,7 +56,6 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavFooter items={footerNavItems} />
                 <NavMain items={mainNavItems} />
             </SidebarContent>
 

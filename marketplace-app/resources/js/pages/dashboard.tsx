@@ -30,7 +30,7 @@ interface Product {
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Dashboard',
+        title: 'Início',
         href: dashboard().url,
     },
 ];

@@ -1,9 +1,27 @@
 import AppLayout from '@/layouts/app-layout';
 import { useCart } from '@/Contexts/CartContext';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
+
+
 
 export default function Cart() {
-    const { cart, removeFromCart, totalPrice, totalItems } = useCart();
+    const { cart, removeFromCart, clearCart, totalPrice, totalItems } = useCart();
+    const handleCheckout = () => {
+        router.post('/checkout', {
+            items: cart as any,
+            total: totalPrice
+        },
+            {
+                onSuccess: () => {
+                    clearCart();
+                    alert('Pedido realizado com sucesso!');
+                },
+                onError: () => {
+                    alert('Erro ao processar o pedido. Tente novamente.');
+                }
+            }
+    );
+    }
 
     return (
         <AppLayout breadcrumbs={[{ title: 'Carrinho', href: '/cart' }]}>
@@ -31,7 +49,7 @@ export default function Cart() {
                                 <span>Total:</span>
                                 <span className="text-xl font-bold text-green-600">R$ {totalPrice.toFixed(2)}</span>
                             </div>
-                            <button className="w-full bg-primary text-primary-foreground py-3 rounded-md font-bold hover:opacity-90">
+                            <button onClick={handleCheckout} disabled={cart.length === 0} className="w-full bg-primary text-primary-foreground py-3 rounded-md font-bold hover:opacity-90">
                                 Finalizar Pedido
                             </button>
                         </div>

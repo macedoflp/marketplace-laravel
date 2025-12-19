@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return Inertia::render('welcome', [
@@ -25,6 +26,8 @@ Route::get('/dashboard', [ProductController::class, 'index'])
         Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
         Route::put('/products/{product}/update', [ProductController::class, 'update'])->name('products.update');
         Route::get('/cart', fn() => Inertia('Cart'));
+        Route::post('/checkout', [OrderController::class, 'store']);
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     });
 
 require __DIR__.'/settings.php';
