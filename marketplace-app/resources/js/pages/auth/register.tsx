@@ -27,6 +27,16 @@ export default function Register() {
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
+                                <Label htmlFor="photo">Foto de Perfil</Label>
+                                <Input
+                                    id="photo"
+                                    type="file"
+                                    accept="image/*"
+                                    name="photo"
+                                />
+                            </div>
+                            
+                            <div className="grid gap-2">
                                 <Label htmlFor="name">Nome</Label>
                                 <Input
                                     id="name"

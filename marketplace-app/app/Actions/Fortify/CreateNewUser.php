@@ -28,12 +28,19 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'password' => $this->passwordRules(),
+            'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2048'],
         ])->validate();
+
+        $path = null;
+        if (isset($input['photo'])) {
+            $path = $input['photo']->store('profile-photos', 'public');
+        }
 
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
+            'profile_photo_path' => $path,
         ]);
     }
 }
