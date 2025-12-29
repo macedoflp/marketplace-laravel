@@ -18,15 +18,18 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'test@example.com'],
             [
-                'name' => 'Test User',
+                'name' => 'Vendedor Teste',
                 'password' => 'password',
+                'role' => 'sealler',
                 'email_verified_at' => now(),
             ]
         );
 
         \App\Models\User::factory()->create([
-                'name' => 'Vendedor Teste',
+                'name' => 'Adm',
                 'email' => 'admin@admin.com',
+                'role' => 'sealler',
+                'password' => 'admin123',
             ]);
 
             $categories = ['Eletrônicos', 'Roupas', 'Livros', 'Casa', 'Esportes'];

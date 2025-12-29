@@ -11,6 +11,7 @@ interface User {
     id: number;
     name: string;
     email: string;
+    role: 'user' | 'sealler';
 }
 
 interface Category {
@@ -42,7 +43,7 @@ interface DashboardProps {
     filters: { search?: string }; 
 }
 
-export default function Dashboard({ products, filters }: DashboardProps) {
+export default function Dashboard({ auth, products, filters }: DashboardProps) {
     const [search, setSearch] = useState(filters?.search ?? '');
 
     useEffect(() => {
@@ -67,12 +68,14 @@ export default function Dashboard({ products, filters }: DashboardProps) {
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="flex items-center justify-between">
                     <h2 className="text-2xl font-bold tracking-tight">Catálogo de Produtos</h2>
-                    <Link
-                        href="/products/create"
-                        className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-                    >
-                        Cadastrar Novo Produto
-                    </Link>
+                    {auth.user.role === 'sealler' && (
+                        <Link
+                            href="/products/create"
+                            className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                        >
+                            Cadastrar Novo Produto
+                        </Link>
+                    )}
                 </div>
 
                 <div className="flex flex-col gap-4">

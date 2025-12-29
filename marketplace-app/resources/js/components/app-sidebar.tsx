@@ -11,36 +11,43 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
+import { type NavItem, type SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
 import { LayoutGrid, Package, ShoppingCart, ShoppingBag } from 'lucide-react';
 import AppLogo from './app-logo';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Início',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-    {
-        title: 'Meus Produtos',
-        href: '/my-products',
-        icon: Package,
-    },
-    {
-        title: 'Carrinho',
-        href: '/cart',
-        icon: ShoppingCart,
-    },
-    {
-        title: 'Meus Pedidos',
-        href: '/orders',
-        icon: ShoppingBag,
-    }
-];
-
-
 export function AppSidebar() {
+
+    const { auth } = usePage<SharedData>().props;
+
+
+    const mainNavItems: NavItem[] = [
+        {
+            title: 'Início',
+            href: dashboard(),
+            icon: LayoutGrid,
+        },
+        {
+            title: 'Carrinho',
+            href: '/cart',
+            icon: ShoppingCart,
+        },
+        {
+            title: 'Meus Pedidos',
+            href: '/orders',
+            icon: ShoppingBag,
+        }
+    ];
+
+
+    if (auth.user.role === 'sealler') {
+        mainNavItems.splice(1, 0, {
+            title: 'Meus Produtos',
+            href: '/my-products',
+            icon: Package,
+        });
+    }
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -56,6 +63,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
+
                 <NavMain items={mainNavItems} />
             </SidebarContent>
 

@@ -13,6 +13,9 @@ class ProductController extends Controller
 
     public function create()
     {
+        if (auth()->user()->role !== 'sealler') {
+            return redirect()->route('dashboard')->with('error', 'Você não tem permissão para criar produtos.');
+        }
         return Inertia::render('Product/Create', [
             'categories' => Category::all()
         ]);
@@ -27,6 +30,9 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
             'image_path' => 'nullable|image|max:2048,png,jpg,jpeg',
         ]);
+        if (auth()->user()->role !== 'sealler') {
+            return redirect()->route('dashboard')->with('error', 'Você não tem permissão para criar produtos.');
+        }
 
         if ($request->hasFile('image_path')) {
             $imagePath = $request->file('image_path')->store('products', 'public');
