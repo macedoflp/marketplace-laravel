@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return Inertia::render('welcome', [
@@ -12,9 +13,9 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/dashboard', [ProductController::class, 'index'])
+Route::get('/productslist', [ProductController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    ->name('productslist');
 
     
     Route::middleware('auth')->group(function () {
@@ -22,6 +23,7 @@ Route::get('/dashboard', [ProductController::class, 'index'])
         Route::get('/cart', fn() => Inertia('Cart'));
         Route::post('/checkout', [OrderController::class, 'store']);
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     });
 
     Route::middleware(['auth', 'sealler'])->group(function () {

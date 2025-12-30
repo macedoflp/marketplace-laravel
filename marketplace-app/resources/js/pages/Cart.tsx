@@ -72,7 +72,7 @@ export default function Cart() {
                 ) : (
                     <div className="text-center py-20">
                         <p className="text-muted-foreground mb-4">Seu carrinho está vazio.</p>
-                        <Link href="/dashboard" className="text-primary underline">Voltar para o catálogo</Link>
+                        <Link href="/productslist" className="text-primary underline">Voltar para o catálogo</Link>
                     </div>
                 )}
             </div>

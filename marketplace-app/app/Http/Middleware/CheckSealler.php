@@ -16,7 +16,7 @@ class CheckSealler
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->user()->role !== 'sealler') {
-            return redirect()->route('dashboard')->with('error', ' Você nao tem permissão para acessar essa pagina.');
+            return redirect()->route('productslist')->with('error', ' Você nao tem permissão para acessar essa pagina.');
         }
         return $next($request);
     }

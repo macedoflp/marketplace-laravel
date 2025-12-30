@@ -1,4 +1,4 @@
-import { dashboard, login, register } from '@/routes';
+import { login, register } from '@/routes';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { ShoppingBasket } from 'lucide-react';
@@ -33,7 +33,7 @@ export default function Welcome({
                         <div className="flex items-center gap-4">
                             {auth.user ? (
                                 <Link
-                                    href={dashboard()}
+                                    href={'/productslist'}
                                     className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm font-medium hover:border-[#1915014a] dark:border-[#3E3E3A] dark:hover:border-[#62605b] transition-colors"
                                 >
                                     Ir para o Início
@@ -71,7 +71,7 @@ export default function Welcome({
 
                     <div className="flex flex-wrap justify-center gap-4 mb-16">
                         <Link
-                            href={dashboard()}
+                            href={'/productslist'}
                             className="rounded-md bg-primary px-8 py-3 text-lg font-bold text-black shadow-lg hover:opacity-90 transition-all"
                         >
                             Explorar Produtos

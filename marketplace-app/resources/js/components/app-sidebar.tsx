@@ -10,10 +10,10 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { LayoutGrid, Package, ShoppingCart, ShoppingBag } from 'lucide-react';
+import { LayoutGrid, Package, ShoppingCart, ShoppingBag, LayoutDashboard } from 'lucide-react';
 import AppLogo from './app-logo';
 
 export function AppSidebar() {
@@ -24,7 +24,7 @@ export function AppSidebar() {
     const mainNavItems: NavItem[] = [
         {
             title: 'Início',
-            href: dashboard(),
+            href: '/productslist',
             icon: LayoutGrid,
         },
         {
@@ -36,6 +36,11 @@ export function AppSidebar() {
             title: 'Meus Pedidos',
             href: '/orders',
             icon: ShoppingBag,
+        },
+        {
+            title: 'Metricas',
+            href: '/dashboard',
+            icon: LayoutDashboard,
         }
     ];
 
@@ -54,7 +59,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboard()} prefetch>
+                            <Link href={'/productslist'} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

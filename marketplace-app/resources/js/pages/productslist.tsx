@@ -1,6 +1,5 @@
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
-import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
@@ -32,7 +31,7 @@ interface Product {
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Início',
-        href: dashboard().url,
+        href: '/productslist',
     },
 ];
 interface DashboardProps {
@@ -43,13 +42,13 @@ interface DashboardProps {
     filters: { search?: string }; 
 }
 
-export default function Dashboard({ auth, products, filters }: DashboardProps) {
+export default function productslist({ auth, products, filters }: DashboardProps) {
     const [search, setSearch] = useState(filters?.search ?? '');
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
             router.get(
-                '/dashboard',
+                '/productslist',
                 { search },
                 {
                     preserveState: true,

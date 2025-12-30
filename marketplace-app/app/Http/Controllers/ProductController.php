@@ -14,7 +14,7 @@ class ProductController extends Controller
     public function create()
     {
         if (auth()->user()->role !== 'sealler') {
-            return redirect()->route('dashboard')->with('error', 'Você não tem permissão para criar produtos.');
+            return redirect()->route('productslist')->with('error', 'Você não tem permissão para criar produtos.');
         }
         return Inertia::render('Product/Create', [
             'categories' => Category::all()
@@ -31,7 +31,7 @@ class ProductController extends Controller
             'image_path' => 'nullable|image|max:2048,png,jpg,jpeg',
         ]);
         if (auth()->user()->role !== 'sealler') {
-            return redirect()->route('dashboard')->with('error', 'Você não tem permissão para criar produtos.');
+            return redirect()->route('productslist')->with('error', 'Você não tem permissão para criar produtos.');
         }
 
         if ($request->hasFile('image_path')) {
@@ -44,7 +44,7 @@ class ProductController extends Controller
 
         Product::create($validated);
 
-        return redirect()->route('dashboard')->with('success', 'Produto criado com sucesso!');
+        return redirect()->route('productslist')->with('success', 'Produto criado com sucesso!');
     }
     public function index()
     {
@@ -53,7 +53,7 @@ class ProductController extends Controller
             $query->where('name', 'like', "%{$search}%");
         })
         ->latest()->get();
-        return Inertia::render('dashboard', [
+        return Inertia::render('productslist', [
             'products' => $products,
         ]);
     }
