@@ -24,6 +24,7 @@ Route::get('/productslist', [ProductController::class, 'index'])
         Route::post('/checkout', [OrderController::class, 'store']);
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::post('/reviews', [\App\Http\Controllers\ReviewController::class, 'store'])->name('reviews.store');
     });
 
     Route::middleware(['auth', 'sealler'])->group(function () {

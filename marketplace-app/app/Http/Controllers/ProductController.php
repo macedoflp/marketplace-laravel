@@ -29,6 +29,8 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'stock' => 'required|integer|min:0',
             'image_path' => 'nullable|image|max:2048,png,jpg,jpeg',
+        ], [
+            'category_id.exists' => 'A categoria selecionada é inválida.',
         ]);
         if (auth()->user()->role !== 'sealler') {
             return redirect()->route('productslist')->with('error', 'Você não tem permissão para criar produtos.');
@@ -46,21 +48,28 @@ class ProductController extends Controller
 
         return redirect()->route('productslist')->with('success', 'Produto criado com sucesso!');
     }
-    public function index()
-    {
-        $products = Product::with('category')
-        ->when(request()->input('search'), function ($query, $search) {
-            $query->where('name', 'like', "%{$search}%");
-        })
-        ->latest()->get();
-        return Inertia::render('productslist', [
-            'products' => $products,
-        ]);
-    }
+        public function index(Request $request)
+        {
+            $products = Product::query()
+                ->with('category')
+                ->withAvg('reviews', 'rating') 
+                ->withCount('reviews')
+                ->when($request->search, function ($query, $search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })
+                ->get();
 
+            return inertia('productslist', [
+                'products' => $products,
+                'filters' => $request->only(['search'])
+            ]);
+        }
     public function show(\App\Models\Product $product)
     {
-        $product->load('category');
+        $product->load('category', 'reviews.user');
+
+        $product->reviews_avg_rating = $product->reviews()->avg('rating');
+
         return Inertia::render('Product/Show', [
             'product' => $product,
             'filters' => request()->only(['search'])

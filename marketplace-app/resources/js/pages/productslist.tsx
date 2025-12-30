@@ -4,7 +4,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
-
+import { Star } from 'lucide-react'; // Importado para as avaliações
 
 interface User {
     id: number;
@@ -26,6 +26,9 @@ interface Product {
     price: string | number;
     category: Category;
     image_path: string;
+    // Novos campos para o sistema de avaliações
+    reviews_avg_rating?: number; 
+    reviews_count?: number;
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -34,6 +37,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/productslist',
     },
 ];
+
 interface DashboardProps {
     auth: {
         user: User;
@@ -99,7 +103,6 @@ export default function productslist({ auth, products, filters }: DashboardProps
                                 <div className="aspect-video w-full bg-muted flex items-center justify-center overflow-hidden">
                                     {product.image_path ? (
                                         <img 
-                                            // Lógica para diferenciar imagem do storage vs imagem externa (seeder)
                                             src={product.image_path.startsWith('http') 
                                                 ? product.image_path 
                                                 : `/storage/${product.image_path}`
@@ -113,10 +116,17 @@ export default function productslist({ auth, products, filters }: DashboardProps
                                 </div>
 
                                 <div className="flex flex-1 flex-col p-4">
-                                    <div className="mb-2">
+                                    <div className="mb-2 flex items-center justify-between">
                                         <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
                                             {product.category?.name || 'Geral'}
                                         </span>
+                                        
+                                        {/* EXIBIÇÃO DAS ESTRELAS */}
+                                        <div className="flex items-center gap-1">
+                                            <Star size={14} className="fill-yellow-400 text-yellow-400" />
+                                            <span className="text-xs font-bold">{product.reviews_avg_rating || '0.0'}</span>
+                                            <span className="text-[10px] text-muted-foreground">({product.reviews_count || 0})</span>
+                                        </div>
                                     </div>
                                     
                                     <h3 className="font-semibold text-foreground line-clamp-1">
