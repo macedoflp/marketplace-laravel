@@ -32,7 +32,7 @@ class CreateNewUser implements CreatesNewUsers
         ])->validate();
 
         $path = null;
-        if (isset($input['photo'])) {
+        if ($input['photo'] && $input['photo'] instanceof \Illuminate\Http\UploadedFile) {
             $path = $input['photo']->store('profile-photos', 'public');
         }
 

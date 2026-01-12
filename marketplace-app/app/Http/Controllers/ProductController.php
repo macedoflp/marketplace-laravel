@@ -64,7 +64,7 @@ class ProductController extends Controller
                 'filters' => $request->only(['search'])
             ]);
         }
-    public function show(\App\Models\Product $product)
+    public function show(Product $product)
     {
         $product->load('category', 'reviews.user');
 
